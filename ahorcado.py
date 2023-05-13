@@ -95,7 +95,7 @@ class JuegoAhorcado:
                 if puedeGanar:
                     print(self.Salvado[0])
                     print('¡Bien hecho! la palabra secreta es :', PalabraSecreta)
-                    print('Has ganado!')
+                    print('Has ganado!,', nombre)
                     break
             else:
                 intentos.append(nueva_letra)
@@ -146,4 +146,5 @@ class JuegoAhorcado:
 
 
 if __name__ == '__main__':
+    nombre = input("Dime tu nombre:")
     JuegoAhorcado().jugar()
