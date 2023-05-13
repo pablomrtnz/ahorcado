@@ -74,6 +74,9 @@ class JuegoAhorcado:
     opciones = 'PERA PLATANO UVA MANZANA MELOCOTON KIWI ALBARICOQUE CEREZA CIRUELA FRESA GRANADA HIGO LIMA LIMON ' \
                'MANDARINA NARANJA MELON MORA NISPERO PIÑA POMELO SANDIA '.split()
 
+    def obtener_intentos_restantes(self, intentos):
+        return len(self.Estados) - 1 - len(intentos)
+
     def jugar(self):
 
         intentos = []
@@ -109,9 +112,10 @@ class JuegoAhorcado:
     def dibujar(self, intentos, letra, palabra_secreta):
         print(self.Estados[len(intentos)])
         print('La categoría es: ', self.categoria)
-        print()
-
+        intentos_restantes = self.obtener_intentos_restantes(intentos)
+        print('Intentos restantes:', intentos_restantes)
         print('Letras incorrectas: ', end='')
+
         for let in intentos:
             print(let, end=' ')
         if len(intentos) == 0 and 0 == len(intentos):
