@@ -80,6 +80,9 @@ class JuegoAhorcado:
                     'COCODRILO DROMEDARIO PANTERA HORMIGA ESCORPION'.split()
     }
 
+    def obtener_intentos_restantes(self, intentos):
+        return len(self.Estados) - 1 - len(intentos)
+
     def jugar(self):
 
         intentos = []
@@ -108,7 +111,7 @@ class JuegoAhorcado:
                 if puedeGanar:
                     print(self.Salvado[0])
                     print('¡Bien hecho! la palabra secreta es :', PalabraSecreta)
-                    print('Has ganado!')
+                    print('Has ganado!,', nombre)
                     break
             else:
                 intentos.append(nueva_letra)
@@ -122,9 +125,10 @@ class JuegoAhorcado:
     def dibujar(self, intentos, letra, palabra_secreta, categoria):
         print(self.Estados[len(intentos)])
         print('La categoría es: ', categoria)
-        print()
-
+        intentos_restantes = self.obtener_intentos_restantes(intentos)
+        print('Intentos restantes:', intentos_restantes)
         print('Letras incorrectas: ', end='')
+
         for let in intentos:
             print(let, end=' ')
         if len(intentos) == 0 and 0 == len(intentos):
@@ -161,4 +165,5 @@ class JuegoAhorcado:
 
 
 if __name__ == '__main__':
+    nombre = input("Dime tu nombre:")
     JuegoAhorcado().jugar()
