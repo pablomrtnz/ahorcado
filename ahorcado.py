@@ -85,6 +85,12 @@ class JuegoAhorcado:
 
             nueva_letra = self.dame_letra(intentos + letra_correcta)
 
+            if nueva_letra == "TERMINAR":
+                print(self.Estados[6])
+                print('Has decidido terminar el juego.')
+                print('La palabra era "{}"'.format(PalabraSecreta))
+                break
+
             if nueva_letra in PalabraSecreta:
                 letra_correcta.append(nueva_letra)
                 puedeGanar = True
@@ -135,6 +141,8 @@ class JuegoAhorcado:
     def dame_letra(letra):
         while True:
             adivina = input('Adivina una letra.\n> ').upper()
+            if adivina == "TERMINAR":
+                return adivina
             if len(adivina) != 1:
                 print('Introduce una única letra.')
             elif adivina in letra:
