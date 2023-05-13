@@ -70,18 +70,25 @@ class JuegoAhorcado:
     / \ |
     ====="""]
 
-    categoria = 'FRUTAS'
-    opciones = 'PERA PLATANO UVA MANZANA MELOCOTON KIWI ALBARICOQUE CEREZA CIRUELA FRESA GRANADA HIGO LIMA LIMON ' \
-               'MANDARINA NARANJA MELON MORA NISPERO PIÑA POMELO SANDIA '.split()
+    categorias = ['FRUTAS', 'PAISES', 'ANIMALES']
+    opciones = {
+        'FRUTAS': 'PERA PLATANO UVA MANZANA MELOCOTON KIWI ALBARICOQUE CEREZA CIRUELA FRESA GRANADA HIGO LIMA LIMON '
+                  'MANDARINA NARANJA MELON MORA NISPERO PIÑA POMELO SANDIA'.split(),
+        'PAISES': 'ALEMANIA ARGENTINA AUSTRALIA BRASIL CANADA CHINA COLOMBIA ESPAÑA FRANCIA INDIA ITALIA JAPON MEXICO '
+                  'RUSIA SUDAFRICA SUECIA TURQUIA'.split(),
+        'ANIMALES': 'LEON TIGRE ELEFANTE CANGURO JIRAFA PINGÜINO LOBO SERPIENTE RINOCERONTE CAMALEON MURCIELAGO '
+                    'COCODRILO DROMEDARIO PANTERA HORMIGA ESCORPION'.split()
+    }
 
     def jugar(self):
 
         intentos = []
         letra_correcta = []
-        PalabraSecreta = random.choice(self.opciones)
+        categoria = random.choice(self.categorias)
+        PalabraSecreta = random.choice(self.opciones[categoria])
 
         while True:
-            self.dibujar(intentos, letra_correcta, PalabraSecreta)
+            self.dibujar(intentos, letra_correcta, PalabraSecreta, categoria)
 
             nueva_letra = self.dame_letra(intentos + letra_correcta)
 
@@ -107,14 +114,14 @@ class JuegoAhorcado:
                 intentos.append(nueva_letra)
 
             if len(intentos) == len(self.Estados) - 1:
-                self.dibujar(intentos, letra_correcta, PalabraSecreta)
+                self.dibujar(intentos, letra_correcta, PalabraSecreta, categoria)
                 print('Demasiados intentos!')
                 print('La palabra era "{}"'.format(PalabraSecreta))
                 break
 
-    def dibujar(self, intentos, letra, palabra_secreta):
+    def dibujar(self, intentos, letra, palabra_secreta, categoria):
         print(self.Estados[len(intentos)])
-        print('La categoría es: ', self.categoria)
+        print('La categoría es: ', categoria)
         print()
 
         print('Letras incorrectas: ', end='')
