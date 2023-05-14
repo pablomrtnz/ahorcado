@@ -1,7 +1,13 @@
 import random
 
+"""
+**JUEGO DEL AHORCADO**
+"""
 
 class JuegoAhorcado:
+    """
+    **Clase que representa el juego del ahorcado.**
+    """
     Estados = [
         r"""
      +--+
@@ -81,27 +87,38 @@ class JuegoAhorcado:
     }
 
     def obtener_intentos_restantes(self, intentos):
+        """
+        Calcula el número de intentos restantes en función de los intentos realizados por el jugador.
+        ---
+        """
         return len(self.Estados) - 1 - len(intentos)
 
     def jugar(self):
-
+        """
+        Inicia el juego del ahorcado.
+        """
         intentos = []
         letra_correcta = []
         categoria = random.choice(self.categorias)
         PalabraSecreta = random.choice(self.opciones[categoria])
 
         while True:
+            # Dibujar el estado actual del juego
             self.dibujar(intentos, letra_correcta, PalabraSecreta, categoria)
 
+            # Obtener una nueva letra del jugador
             nueva_letra = self.dame_letra(intentos + letra_correcta)
 
+            # Si introducen TERMINAR el juego acaba
             if nueva_letra == "TERMINAR":
                 print(self.Estados[6])
                 print('Has decidido terminar el juego.')
                 print('La palabra era "{}"'.format(PalabraSecreta))
                 break
 
+            # Comprobar si la nueva letra está en la palabra secreta
             if nueva_letra in PalabraSecreta:
+                # Agregar la letra correcta a la lista
                 letra_correcta.append(nueva_letra)
                 puedeGanar = True
                 for sin_intentos in PalabraSecreta:
@@ -109,26 +126,35 @@ class JuegoAhorcado:
                         puedeGanar = False
                         break
                 if puedeGanar:
+                    # El jugador ha adivinado todas las letras correctamente
                     print(self.Salvado[0])
                     print('¡Bien hecho! la palabra secreta es :', PalabraSecreta)
                     print('Has ganado!,', nombre)
                     break
             else:
+                # La letra no está en la palabra secreta, agregarla a los intentos
                 intentos.append(nueva_letra)
 
             if len(intentos) == len(self.Estados) - 1:
+                # El jugador ha agotado todos los intentos posibles
                 self.dibujar(intentos, letra_correcta, PalabraSecreta, categoria)
                 print('Demasiados intentos!')
                 print('La palabra era "{}"'.format(PalabraSecreta))
                 break
 
     def dibujar(self, intentos, letra, palabra_secreta, categoria):
+        """
+        Dibuja el estado actual del ahorcado y muestra la palabra secreta con las letras adivinadas.
+        ---
+        """
+        # Se dibuja el juego en cada intento
         print(self.Estados[len(intentos)])
         print('La categoría es: ', categoria)
         intentos_restantes = self.obtener_intentos_restantes(intentos)
         print('Intentos restantes:', intentos_restantes)
         print('Letras incorrectas: ', end='')
 
+        # Se comprueba que la letra introducida es correcta
         for let in intentos:
             print(let, end=' ')
         if len(intentos) == 0 and 0 == len(intentos):
@@ -140,8 +166,10 @@ class JuegoAhorcado:
 
         print()
 
+        # Se asigna _ a los espacios que faltan por adivinar
         espacios = ['_'] * len(palabra_secreta)
 
+        # Si la palabra es adivinada se sustituye _ por la letra
         for i in range(len(palabra_secreta)):
             if palabra_secreta[i] in letra:
                 espacios[i] = palabra_secreta[i]
@@ -150,6 +178,11 @@ class JuegoAhorcado:
 
     @staticmethod
     def dame_letra(letra):
+        """
+        Solicita al jugador que adivine una letra y realiza las validaciones necesarias.
+        ---
+        """
+        # Se pide letra
         while True:
             adivina = input('Adivina una letra.\n> ').upper()
             if adivina == "TERMINAR":
@@ -165,5 +198,6 @@ class JuegoAhorcado:
 
 
 if __name__ == '__main__':
+    # Se pide nombre de jugador y se inicializa el juego
     nombre = input("Dime tu nombre:")
     JuegoAhorcado().jugar()
